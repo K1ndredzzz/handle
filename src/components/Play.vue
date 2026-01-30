@@ -4,6 +4,7 @@ import { answer, dayNo, isDev, isFailed, isFinished, showCheatSheet, showFailed,
 import { markStart, meta, tries, useNoHint, useStrictMode } from '~/storage'
 import { t } from '~/i18n'
 import { TRIES_LIMIT, WORD_LENGTH, checkValidIdiom } from '~/logic'
+import { getRandomAnswer } from '~/answers'
 
 const el = ref<HTMLInputElement>()
 const input = ref('')
@@ -49,6 +50,11 @@ function hint() {
 }
 function sheet() {
   showCheatSheet.value = !showCheatSheet.value
+}
+
+function startRandom() {
+  const { word } = getRandomAnswer()
+  location.href = `/?word=${word}`
 }
 
 watchEffect(() => {
@@ -145,6 +151,11 @@ watchEffect(() => {
       <Transition name="fade-in">
         <div v-if="isFinishedDelay && isFinished">
           <ResultFooter />
+          <div flex="~ center" mt4>
+            <button btn p="x4 y2" @click="startRandom" :title="t('random-mode-tooltip')">
+              {{ t('random-mode') }}
+            </button>
+          </div>
           <Countdown />
         </div>
       </Transition>
