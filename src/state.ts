@@ -34,7 +34,7 @@ export const isDev = import.meta.hot || params.get('dev') === 'hey'
 export const daySince = useDebounce(computed(() => {
   // Adjust date for daylight saving time, assuming START_DATE is not in DST
   const adjustedNow = isDstObserved(now.value) ? new Date(+now.value + 3600000) : now.value
-  return Math.floor((+adjustedNow - +START_DATE) / 7200000)
+  return Math.floor((+adjustedNow - +START_DATE) / 86400000)
 }))
 export const dayNo = ref(+(params.get('d') || daySince.value))
 export const dayNoHanzi = computed(() => `${numberToHanzi(dayNo.value)}日`)
