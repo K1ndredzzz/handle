@@ -18,12 +18,3 @@ export function getAnswerOfDay(day: number) {
     hint: hint || getHint(word),
   }
 }
-
-export function getRandomAnswer() {
-  const answer = answers[Math.floor(Math.random() * answers.length)]
-  const [word = '', hint = ''] = answer
-  return {
-    word,
-    hint: hint || getHint(word),
-  }
-}

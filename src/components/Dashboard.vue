@@ -4,7 +4,6 @@ import { t } from '~/i18n'
 import { showDashboard } from '~/state'
 import { averageDurations, gamesCount, history, historyTriesCount, noHintPassedCount, passedCount, passedTries } from '~/storage'
 import { checkValidIdiom } from '~/logic'
-import { getRandomAnswer } from '~/answers'
 
 const triesMap = computed(() => {
   const map = new Map<number, number>()
@@ -41,11 +40,6 @@ function close() {
 
 const allWords = computed(() => Array.from(new Set(Object.values(history.value).flatMap(i => i.tries).filter(Boolean) as string[])))
 const validWords = computed(() => allWords.value.filter(i => checkValidIdiom(i, true)))
-
-function startRandom() {
-  const { word } = getRandomAnswer()
-  location.href = `/?word=${word}`
-}
 </script>
 
 <template>
@@ -87,12 +81,6 @@ function startRandom() {
     <div flex="~ wrap gap-4" justify-center min-w-100px py2>
       <DashboardItem :value="(historyTriesCount / gamesCount).toFixed(1)" :text="t('average-tries-count')" />
       <DashboardItem :value="averageDurations || '-'" :text="t('average-durations')" />
-    </div>
-
-    <div flex="~ center" mt4>
-      <button btn p="x4 y2" @click="startRandom" :title="t('random-mode-tooltip')">
-        {{ t('random-mode') }}
-      </button>
     </div>
   </div>
 </template>
